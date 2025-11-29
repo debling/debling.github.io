@@ -40,14 +40,4 @@ const {
   </ul>
 </nav>
 
-<script>
-  import { translations } from '../i18n/translations';
-  
-  window.addEventListener('languageChange', (e) => {
-    const { lang } = e.detail;
-    const titleElement = document.getElementById('links-title');
-    if (titleElement) {
-      titleElement.textContent = translations[lang].linksTitle;
-    }
-  });
-</script>
+

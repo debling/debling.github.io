@@ -1,27 +1,32 @@
 ---
 interface Props {
   label: string;
+  currentLang: 'en' | 'pt';
 }
 
-const { label } = Astro.props;
+const { label, currentLang } = Astro.props;
 ---
 
 <div class="language-selector mb-10 flex gap-5 items-center flex-wrap">
   <span class="text-termbrightaqua font-bold">{label}</span>
-  <button 
-    class="lang-button active border border-termgray text-termbrightblue px-5 py-2 transition-all duration-300 hover:bg-termbg2 hover:text-termbrightyellow hover:border-termbrightyellow rounded"
-    data-lang="en"
+  <a 
+    href="/en"
+    class={`lang-button border border-termgray text-termbrightblue px-5 py-2 transition-all duration-300 hover:bg-termbg2 hover:text-termbrightyellow hover:border-termbrightyellow rounded no-underline ${
+      currentLang === 'en' ? 'active' : ''
+    }`}
     aria-label="Switch to English"
   >
     EN
-  </button>
-  <button 
-    class="lang-button border border-termgray text-termbrightblue px-5 py-2 transition-all duration-300 hover:bg-termbg2 hover:text-termbrightyellow hover:border-termbrightyellow rounded"
-    data-lang="pt"
+  </a>
+  <a 
+    href="/pt"
+    class={`lang-button border border-termgray text-termbrightblue px-5 py-2 transition-all duration-300 hover:bg-termbg2 hover:text-termbrightyellow hover:border-termbrightyellow rounded no-underline ${
+      currentLang === 'pt' ? 'active' : ''
+    }`}
     aria-label="Mudar para Português"
   >
     PT-BR
-  </button>
+  </a>
 </div>
 
 <style>
@@ -30,39 +35,3 @@ const { label } = Astro.props;
     @apply bg-termbg2 text-termbrightgreen border-termbrightgreen;
   }
 </style>
-
-<script>
-  import { translations } from '../i18n/translations';
-  
-  const langButtons = document.querySelectorAll('.lang-button');
-  let currentLang: 'en' | 'pt' = 'en';
-
-  langButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      const lang = (button as HTMLButtonElement).dataset.lang as 'en' | 'pt';
-      if (lang === currentLang) return;
-      
-      currentLang = lang;
-      
-      // Update active state
-      langButtons.forEach(btn => {
-        btn.classList.toggle('active', btn === button);
-      });
-      
-      // Update page language
-      document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
-      
-      // Update meta description
-      const metaDesc = document.querySelector('meta[name="description"]');
-      if (metaDesc) {
-        metaDesc.setAttribute('content', translations[lang].description);
-      }
-      
-      // Update title
-      document.title = translations[lang].title;
-      
-      // Dispatch custom event for other components
-      window.dispatchEvent(new CustomEvent('languageChange', { detail: { lang } }));
-    });
-  });
-</script>

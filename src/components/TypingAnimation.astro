@@ -31,23 +31,5 @@ const fullText = initialText.join('\n');
   // Start initial typing
   typeText(fullText);
 
-  // Listen for language changes
-  window.addEventListener('languageChange', (e) => {
-    const { lang } = e.detail;
-    
-    // Import translations dynamically
-    import('../i18n/translations').then(({ translations }) => {
-      const newText = translations[lang].typingText.join('\n');
-      
-      // Clear existing content and timeout
-      clearTimeout(typingTimeout);
-      textElement.textContent = '';
-      textElement.innerHTML = '';
-      
-      // Start typing with new text
-      setTimeout(() => {
-        typeText(newText);
-      }, 100);
-    });
-  });
+  
 </script>

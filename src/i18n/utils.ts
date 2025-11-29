@@ -29,3 +29,23 @@ export const translations = {
 
 export type Language = keyof typeof translations;
 export type TranslationKey = keyof typeof translations.en;
+
+export function getTranslations(lang: Language) {
+  return translations[lang];
+}
+
+export function getRelativeUrl(lang: Language, path: string = ''): string {
+  const prefix = lang === 'en' ? '' : `/${lang}`;
+  return `${prefix}${path}`;
+}
+
+export function getLanguageFromPath(pathname: string): Language {
+  const segments = pathname.split('/').filter(Boolean);
+  const firstSegment = segments[0];
+  
+  if (firstSegment === 'pt') {
+    return 'pt';
+  }
+  
+  return 'en';
+}
