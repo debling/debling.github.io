@@ -1,0 +1,53 @@
+---
+interface Props {
+  title: string;
+  githubUrl?: string;
+  linkedinUrl?: string;
+}
+
+const { 
+  title, 
+  githubUrl,
+  linkedinUrl
+} = Astro.props;
+---
+
+<nav class="links mt-16 pt-10 border-t-2 border-termgray" aria-label="Social media links">
+  <h2 id="links-title" class="text-termbrightaqua mb-6 text-lg font-bold">{title}</h2>
+  <ul class="space-y-4 list-none">
+    <li>
+      <a 
+        href={githubUrl}
+        class="link-item text-termbrightblue no-underline block py-3 transition-all duration-300 hover:text-termbrightyellow hover:pl-4 before:content-['→_'] before:text-termbrightgreen before:font-bold"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Visit my GitHub profile"
+      >
+        GitHub
+      </a>
+    </li>
+    <li>
+      <a 
+        href={linkedinUrl}
+        class="link-item text-termbrightblue no-underline block py-3 transition-all duration-300 hover:text-termbrightyellow hover:pl-4 before:content-['→_'] before:text-termbrightgreen before:font-bold"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Visit my LinkedIn profile"
+      >
+        LinkedIn
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<script>
+  import { translations } from '../i18n/translations';
+  
+  window.addEventListener('languageChange', (e) => {
+    const { lang } = e.detail;
+    const titleElement = document.getElementById('links-title');
+    if (titleElement) {
+      titleElement.textContent = translations[lang].linksTitle;
+    }
+  });
+</script>

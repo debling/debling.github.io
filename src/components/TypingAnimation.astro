@@ -1,0 +1,53 @@
+---
+interface Props {
+  initialText: string[];
+}
+
+const { initialText } = Astro.props;
+const fullText = initialText.join('\n');
+---
+
+<div class="typing-container my-10 text-termbrightyellow text-xl leading-relaxed min-h-[150px]" role="status" aria-live="polite">
+  <span id="typing-text"></span><span class="cursor inline-block w-3 h-6 bg-termfg ml-1 animate-blink align-text-bottom"></span>
+</div>
+
+<script define:vars={{ fullText }}>
+  const textElement = document.getElementById('typing-text');
+  let typingTimeout;
+  let index = 0;
+
+  function typeText(text, currentIndex = 0) {
+    if (currentIndex < text.length) {
+      const char = text.charAt(currentIndex);
+      if (char === '\n') {
+        textElement.innerHTML += '<br>';
+      } else {
+        textElement.textContent += char;
+      }
+      typingTimeout = setTimeout(() => typeText(text, currentIndex + 1), 80);
+    }
+  }
+
+  // Start initial typing
+  typeText(fullText);
+
+  // Listen for language changes
+  window.addEventListener('languageChange', (e) => {
+    const { lang } = e.detail;
+    
+    // Import translations dynamically
+    import('../i18n/translations').then(({ translations }) => {
+      const newText = translations[lang].typingText.join('\n');
+      
+      // Clear existing content and timeout
+      clearTimeout(typingTimeout);
+      textElement.textContent = '';
+      textElement.innerHTML = '';
+      
+      // Start typing with new text
+      setTimeout(() => {
+        typeText(newText);
+      }, 100);
+    });
+  });
+</script>
