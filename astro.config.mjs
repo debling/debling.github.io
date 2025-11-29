@@ -11,21 +11,16 @@ export default defineConfig({
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'pt'],
-    routing: {
-      prefixDefaultLocale: false,
-    },
   },
 
   experimental: {
     fonts: [
-
-{
-                provider: fontProviders.fontsource(),
+      {
+        provider: fontProviders.fontsource(),
         name: "Iosevka Curly",
         cssVariable: "--font-iosevka",
         display: "swap",
       },
-      
     ],
   },
 
