@@ -1,7 +1,7 @@
 export const translations = {
   en: {
-    title: 'Site Under Construction',
-    description: 'Personal website coming soon - Linux enthusiast, developer',
+    title: 'debling@home',
+    description: 'Personal website coming soon',
     langLabel: '[lang]:',
     typingText: [
       'Site under construction...',
@@ -13,8 +13,8 @@ export const translations = {
     linkedin: 'LinkedIn',
   },
   pt: {
-    title: 'Site em Construção',
-    description: 'Site pessoal em breve - Entusiasta Linux, desenvolvedor',
+    title: 'debling@home',
+    description: 'Site pessoal em breve',
     langLabel: '[idioma]:',
     typingText: [
       'Site em construção...',
